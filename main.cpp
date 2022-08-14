@@ -19,6 +19,7 @@
 #include "src/TransTrafficLight.h"
 #include "src/PeopleTrafficLight.h"
 #include "src/ControllerStateMachine.h"
+#include "src/ControllerLogicModule.h"
 #include "src/TrafficLightsTimingController.h"
 #include "src/ITrafficLightsTimingController.h"
 
@@ -72,7 +73,37 @@ std::unique_ptr<ITrafficLightsTimingController> createTrafficLightsTimingControl
     return std::make_unique<TrafficLightsTimingController>();
 }
 
+class Director {
+
+};
+
+// Class road object contains all road objects type
+class RoadInfrastructure {
+public:
+    RoadInfrastructure(){};
+std::vector<TrafficLight> tL;
+std::vector<LightBulb> lB;
+std::vector<TrafficLightsTimingController> tLtC;
+std::vector<ControllerStateMachine> cSm;
+std::vector<ControllerLogicModule> cLm;
+};
+
 // Builder
+class RoadInfrastructureBuilder {
+protected:
+RoadInfrastructure *RoadInfrastructure;
+public:
+RoadInfrastructureBuilder(): RoadInfrastructure{nullptr} {}
+virtual ~RoadInfrastructureBuilder(){}
+virtual void createRoadInfrastructureBuilder(){}
+virtual void buildControllerLogicModule(){}
+virtual void buildControllerStateMachine() {}
+virtual void buildTrafficLightTimingController(){}
+virtual void buildLightBulb(){}
+virtual void buildTrafficLight(){}
+virtual void buildCrossRoads(){}
+};
+
 
 int main(int argc, const char * argv[]) {
     std::vector<std::unique_ptr<ILightBulb>> vBulbs(createLightBulbs(vLightBulbs));
@@ -89,4 +120,3 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
-
