@@ -1,9 +1,11 @@
 add_library(my_src STATIC
 TrafficLightsTimingController.cpp
+TrafficLightsController.cpp
 ControllerStateMachine.cpp
 ControllerLogicModule.cpp
 TrafficLight.cpp
 CrossRoadsDirector.cpp
+Bridge.cpp
 )
 
 target_include_directories(my_src PUBLIC src)

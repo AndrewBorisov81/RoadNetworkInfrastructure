@@ -1,7 +1,7 @@
 //
 //  main.cpp
 //  RoadNetworkInfrastructure
-// Paterns:
+// Patterns:
 // Bridge, decorator, state
 //
 //  Created by Andrew Borisov on 18.02.2022.
@@ -15,9 +15,11 @@
 #include "src/ILightBulb.h"
 #include "src/LightBulb.h"
 #include "src/CrossRoads.h"
+#include "src/Bridge.h"
 #include "src/TrafficLight.h"
 #include "src/TransTrafficLight.h"
 #include "src/PeopleTrafficLight.h"
+#include "src/TrafficLightsController.h"
 #include "src/ControllerStateMachine.h"
 #include "src/ControllerLogicModule.h"
 #include "src/TrafficLightsTimingController.h"
@@ -73,39 +75,44 @@ std::unique_ptr<ITrafficLightsTimingController> createTrafficLightsTimingControl
     return std::make_unique<TrafficLightsTimingController>();
 }
 
-class Director {
-
-};
-
 // Class road object contains all road objects type
 class RoadInfrastructure {
 public:
     RoadInfrastructure(){};
-std::vector<TrafficLight> tL;
-std::vector<LightBulb> lB;
-std::vector<TrafficLightsTimingController> tLtC;
-std::vector<ControllerStateMachine> cSm;
-std::vector<ControllerLogicModule> cLm;
+    std::vector<TrafficLight> tL;
+    std::vector<TrafficLightsController> tLC;
+    std::vector<Bridge> br;
+    std::vector<CrossRoads> cR; 
 };
 
 // Builder
 class RoadInfrastructureBuilder {
 protected:
-RoadInfrastructure *RoadInfrastructure;
+    RoadInfrastructure* roadInfrastructure;
 public:
-RoadInfrastructureBuilder(): RoadInfrastructure{nullptr} {}
-virtual ~RoadInfrastructureBuilder(){}
-virtual void createRoadInfrastructureBuilder(){}
-virtual void buildControllerLogicModule(){}
-virtual void buildControllerStateMachine() {}
-virtual void buildTrafficLightTimingController(){}
-virtual void buildLightBulb(){}
-virtual void buildTrafficLight(){}
-virtual void buildCrossRoads(){}
+    RoadInfrastructureBuilder(): roadInfrastructure{nullptr} {}
+    virtual ~RoadInfrastructureBuilder(){}
+    virtual void createRoadInfrastructureBuilder(){}
+    virtual void buildTrafficLightsController(){}
+    virtual void buildTrafficLight(){}
+    virtual void buildCrossRoads(){}
+    virtual void buildBridge(){}
+    virtual RoadInfrastructure* getRoadInfrastructure() { return roadInfrastructure; };
 };
 
+class Director {
+public:
+    RoadInfrastructure* createRoadInfrastructure(RoadInfrastructureBuilder& builder) {
+        builder.createRoadInfrastructureBuilder();
+        builder.buildTrafficLight();
+        builder.buildTrafficLightsController();
+        builder.buildBridge();
+        builder.buildCrossRoads();
+        return (builder.getRoadInfrastructure());
+    }
+};
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char* argv[]) {
     std::vector<std::unique_ptr<ILightBulb>> vBulbs(createLightBulbs(vLightBulbs));
     std::unique_ptr<ITrafficLight> mainTrafficLight = createTrafficLight(TypeTrafficLight::DOUBLE_TRANS, vBulbs);
     std::unique_ptr<ControllerStateMachine> mainControllerStateMachine(std::move(createControllerStateMachine()));
