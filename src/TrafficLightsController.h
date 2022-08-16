@@ -1,6 +1,8 @@
 #pragma once
 
-class TrafficLightsController {
+#include "ITrafficLightsController.h"
+
+class TrafficLightsController: public ITrafficLightsController {
     public:
     TrafficLightsController();
 };
