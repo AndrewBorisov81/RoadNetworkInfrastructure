@@ -19,6 +19,7 @@
 #include "src/TrafficLight.h"
 #include "src/TransTrafficLight.h"
 #include "src/PeopleTrafficLight.h"
+#include "src/ITrafficLightsController.h"
 #include "src/TrafficLightsController.h"
 #include "src/ControllerStateMachine.h"
 #include "src/ControllerLogicModule.h"
@@ -79,16 +80,16 @@ std::unique_ptr<ITrafficLightsTimingController> createTrafficLightsTimingControl
 class RoadInfrastructure {
 public:
     RoadInfrastructure(){};
-    std::vector<TrafficLight> tL;
-    std::vector<TrafficLightsController> tLC;
-    std::vector<Bridge> br;
-    std::vector<CrossRoads> cR; 
+    std::vector<std::unique_ptr<ITrafficLight>> tL;
+    std::vector<std::unique_ptr<ITrafficLightsController>> tLC;
+    std::vector<std::unique_ptr<Bridge>> br;
+    std::vector<std::unique_ptr<ICrossRoads>> cR;
 };
 
 // Builder
 class RoadInfrastructureBuilder {
 protected:
-    RoadInfrastructure* roadInfrastructure;
+    std::unique_ptr<RoadInfrastructure> roadInfrastructure;
 public:
     RoadInfrastructureBuilder(): roadInfrastructure{nullptr} {}
     virtual ~RoadInfrastructureBuilder(){}
@@ -97,12 +98,20 @@ public:
     virtual void buildTrafficLight(){}
     virtual void buildCrossRoads(){}
     virtual void buildBridge(){}
-    virtual RoadInfrastructure* getRoadInfrastructure() { return roadInfrastructure; };
+    virtual std::unique_ptr<RoadInfrastructure> getRoadInfrastructure() { return std::make_unique<RoadInfrastructure>(); }
+};
+
+class TransportRoadInfrastructureBuilder: public RoadInfrastructureBuilder {
+public:
+    void createRoadInfrastructureBuilder() { roadInfrastructure = std::make_unique<RoadInfrastructure>(); }
+    void buildTrafficLightsController(){roadInfrastructure->tLC.emplace_back(std::make_unique<TrafficLightsController>()); }
+    void buildTrafficLight(){roadInfrastructure->tL.emplace_back(std::make_unique<TrafficLight>()); }
+    void buildCrossRoads(){roadInfrastructure->cR.emplace_back(std::make_unique<CrossRoads>()); }
 };
 
 class Director {
 public:
-    RoadInfrastructure* createRoadInfrastructure(RoadInfrastructureBuilder& builder) {
+    std::unique_ptr<RoadInfrastructure> createRoadInfrastructure(RoadInfrastructureBuilder& builder) {
         builder.createRoadInfrastructureBuilder();
         builder.buildTrafficLight();
         builder.buildTrafficLightsController();
