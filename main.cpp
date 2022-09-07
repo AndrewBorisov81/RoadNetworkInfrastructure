@@ -101,12 +101,21 @@ public:
     virtual std::unique_ptr<RoadInfrastructure> getRoadInfrastructure() { return std::make_unique<RoadInfrastructure>(); }
 };
 
+// simple cars crossRoads
 class TransportRoadInfrastructureBuilder: public RoadInfrastructureBuilder {
 public:
     void createRoadInfrastructureBuilder() { roadInfrastructure = std::make_unique<RoadInfrastructure>(); }
     void buildTrafficLightsController(){roadInfrastructure->tLC.emplace_back(std::make_unique<TrafficLightsController>()); }
     void buildTrafficLight(){roadInfrastructure->tL.emplace_back(std::make_unique<TrafficLight>()); }
     void buildCrossRoads(){roadInfrastructure->cR.emplace_back(std::make_unique<CrossRoads>()); }
+};
+
+// people cars crossRoads with bride for people across the street
+class PeopleTransportRoadInfrastructureBuilder: public RoadInfrastructureBuilder {
+public:
+    void createRoadInfrastructureBuilder() { roadInfrastructure = std::make_unique<RoadInfrastructure>(); }
+    void buildCrossRoads(){roadInfrastructure->cR.emplace_back(std::make_unique<CrossRoads>()); }
+    void buildBridge(){roadInfrastructure->br.emplace_back(std::make_unique<Bridge>()); }
 };
 
 class Director {
@@ -122,10 +131,16 @@ public:
 };
 
 int main(int argc, const char* argv[]) {
-    std::vector<std::unique_ptr<ILightBulb>> vBulbs(createLightBulbs(vLightBulbs));
+    /*std::vector<std::unique_ptr<ILightBulb>> vBulbs(createLightBulbs(vLightBulbs));
     std::unique_ptr<ITrafficLight> mainTrafficLight = createTrafficLight(TypeTrafficLight::DOUBLE_TRANS, vBulbs);
     std::unique_ptr<ControllerStateMachine> mainControllerStateMachine(std::move(createControllerStateMachine()));
-    std::unique_ptr<ITrafficLightsTimingController> mainTrafficLightTimingController(std::move(createTrafficLightsTimingController()));
+    std::unique_ptr<ITrafficLightsTimingController> mainTrafficLightTimingController(std::move(createTrafficLightsTimingController()));*/
+
+    Director director;
+    TransportRoadInfrastructureBuilder tRi_builder;
+    PeopleTransportRoadInfrastructureBuilder pTrI_builder;
+    std::unique_ptr<RoadInfrastructure> tRinfrastructure= director.createRoadInfrastructure(tRi_builder);
+    std::unique_ptr<RoadInfrastructure> pTrInfrastructure = director.createRoadInfrastructure(pTrI_builder);
     
     std::cout << "Hello road!" << std::endl;
 
@@ -136,3 +151,4 @@ int main(int argc, const char* argv[]) {
     
     return 0;
 }
++// simple cars crossRoads
