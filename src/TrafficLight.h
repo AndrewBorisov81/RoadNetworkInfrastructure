@@ -19,7 +19,7 @@ class TrafficLight: public ITrafficLight
 public:
     TrafficLight();
     TrafficLight(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>>& lightBulbs);
-    virtual ~TrafficLight() = default;
+    virtual ~TrafficLight();
     
     virtual void init() override;
     virtual void allow() override;

@@ -21,6 +21,10 @@ TrafficLight::TrafficLight(TypeTrafficLight typeTrafficLight, std::vector<std::u
 
 }
 
+TrafficLight::~TrafficLight() {
+   
+}
+
 void TrafficLight::init() {
     
 }

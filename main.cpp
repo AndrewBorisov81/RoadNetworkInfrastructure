@@ -17,6 +17,7 @@
 #include "src/CrossRoads.h"
 #include "src/Bridge.h"
 #include "src/TrafficLight.h"
+#include "src/DoubleTrafficLight.h"
 #include "src/ITrafficLightsController.h"
 #include "src/TrafficLightsController.h"
 #include "src/ControllerStateMachine.h"
@@ -49,7 +50,7 @@ std::vector<std::unique_ptr<ILightBulb>> createLightBulbs(const std::vector<Colo
     
     std::vector<std::unique_ptr<ILightBulb>> vLightBulbs;
     
-    for(const ColorLightBulb& color : vfLightBulbs) {
+    /*for(const ColorLightBulb& color : vfLightBulbs) {
         switch(color) {
             case ColorLightBulb::RED:
                 vLightBulbs.emplace_back(std::make_unique<LightBulb>());
@@ -62,7 +63,7 @@ std::vector<std::unique_ptr<ILightBulb>> createLightBulbs(const std::vector<Colo
             default:
                 break;
         };
-    }
+    }*/
     return vLightBulbs;
 }
 
