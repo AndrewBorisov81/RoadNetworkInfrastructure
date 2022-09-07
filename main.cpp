@@ -17,8 +17,6 @@
 #include "src/CrossRoads.h"
 #include "src/Bridge.h"
 #include "src/TrafficLight.h"
-#include "src/TransTrafficLight.h"
-#include "src/PeopleTrafficLight.h"
 #include "src/ITrafficLightsController.h"
 #include "src/TrafficLightsController.h"
 #include "src/ControllerStateMachine.h"
