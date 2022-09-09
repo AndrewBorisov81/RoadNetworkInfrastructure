@@ -5,6 +5,7 @@ ControllerStateMachine.cpp
 ControllerLogicModule.cpp
 TrafficLight.cpp
 DoubleTrafficLight.cpp
+TripleTrafficLight.cpp
 CrossRoadsDirector.cpp
 Bridge.cpp
 )

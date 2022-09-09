@@ -1,7 +1,7 @@
 #include "DoubleTrafficLight.h"
 #include "TrafficLightImpl.h"
 
-DoubleTrafficLight::DoubleTrafficLight() : TrafficLight(new DoubleTrafficLightImpl()) {
+DoubleTrafficLight::DoubleTrafficLight() : TrafficLight{new DoubleTrafficLightImpl()} {
 
 }
 
@@ -16,6 +16,4 @@ void DoubleTrafficLight::allow() {
 void DoubleTrafficLight::disallow() {
     pimpl->double_disallow();
 }
-
-
 
