@@ -8,6 +8,7 @@
 #include <stdio.h>
 
 #include "TrafficLight.h"
+#include "TrafficLightImpl.h"
 #include "ILightBulb.h"
 
 #include <memory>
@@ -16,16 +17,15 @@ TrafficLight::TrafficLight() {
     
 }
 
-TrafficLight::TrafficLight(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>>& lightBulbs)
- : m_type{typeTrafficLight}, m_vBulbs(std::move(lightBulbs)) {
+TrafficLight::TrafficLight(TrafficLightImpl * p) : pimpl{p} {
 
 }
 
 TrafficLight::~TrafficLight() {
-   
+   delete pimpl;
 }
 
-void TrafficLight::init() {
+void TrafficLight::init(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>>& lightBulbs) {
     
 }
 

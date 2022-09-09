@@ -6,4 +6,3 @@ class TrafficLightsController: public ITrafficLightsController {
     public:
     TrafficLightsController();
 };
-

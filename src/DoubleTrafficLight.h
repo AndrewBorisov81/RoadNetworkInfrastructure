@@ -6,5 +6,7 @@ class DoubleTrafficLight : public TrafficLight {
     public:
         DoubleTrafficLight();
         virtual ~DoubleTrafficLight();
-};
 
+        virtual void allow() override;
+        virtual void disallow() override;
+};

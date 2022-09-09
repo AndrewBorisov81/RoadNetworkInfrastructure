@@ -11,7 +11,6 @@
 class ITrafficLight: public IRoadObject
 {
 public:
-    virtual void init() = 0;
     virtual void allow() = 0;
     virtual void disallow() = 0;
     

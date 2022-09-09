@@ -31,10 +31,19 @@ std::unique_ptr<CrossRoads> createCrossroad() {
 
 std::vector<TypeTrafficLight> vTrafficLights{TypeTrafficLight::DOUBLE_TRANS, TypeTrafficLight::DOUBLE_PEOPLE};
 
-std::unique_ptr<ITrafficLight> createTrafficLight(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>>& lightBulbs) {
+/*std::unique_ptr<ITrafficLight> createTrafficLight(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>>& lightBulbs) {
 
     return std::make_unique<TrafficLight>(typeTrafficLight, lightBulbs);
+}*/
+
+std::unique_ptr<ITrafficLight> createTrafficLight(TrafficLightImpl * pimpl, TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>>& lightBulbs) {
+
+    return std::make_unique<TrafficLight>(pimpl);
 }
+
+/*std::unique_ptr<ITrafficLight> createDoubleTrafficLight(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>>& lightBulbs) {
+     
+}*/
 
 std::unique_ptr<ILightBulb> createLightBulb(ColorLightBulb colorBulb) {
     return std::make_unique<LightBulb>(colorBulb);
@@ -50,7 +59,7 @@ std::vector<std::unique_ptr<ILightBulb>> createLightBulbs(const std::vector<Colo
     
     std::vector<std::unique_ptr<ILightBulb>> vLightBulbs;
     
-    /*for(const ColorLightBulb& color : vfLightBulbs) {
+    for(const ColorLightBulb& color : vfLightBulbs) {
         switch(color) {
             case ColorLightBulb::RED:
                 vLightBulbs.emplace_back(std::make_unique<LightBulb>());
@@ -63,7 +72,7 @@ std::vector<std::unique_ptr<ILightBulb>> createLightBulbs(const std::vector<Colo
             default:
                 break;
         };
-    }*/
+    }
     return vLightBulbs;
 }
 
@@ -150,3 +159,4 @@ int main(int argc, const char* argv[]) {
     
     return 0;
 }
+
