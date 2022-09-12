@@ -31,19 +31,16 @@ std::unique_ptr<CrossRoads> createCrossroad() {
 
 std::vector<TypeTrafficLight> vTrafficLights{TypeTrafficLight::DOUBLE_TRANS, TypeTrafficLight::DOUBLE_PEOPLE};
 
-/*std::unique_ptr<ITrafficLight> createTrafficLight(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>>& lightBulbs) {
+std::unique_ptr<ITrafficLight> createTrafficLight(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>>& lightBulbs) {
 
-    return std::make_unique<TrafficLight>(typeTrafficLight, lightBulbs);
-}*/
-
-std::unique_ptr<ITrafficLight> createTrafficLight(TrafficLightImpl * pimpl, TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>>& lightBulbs) {
-
-    return std::make_unique<TrafficLight>(pimpl);
+    return std::make_unique<TrafficLight>();
 }
 
-/*std::unique_ptr<ITrafficLight> createDoubleTrafficLight(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>>& lightBulbs) {
-     
-}*/
+std::unique_ptr<ITrafficLight> createDoubleTrafficLight(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>>& lightBulbs) {
+    std::unique_ptr<DoubleTrafficLight> doubleTrafficLight = std::make_unique<DoubleTrafficLight>();
+    doubleTrafficLight->init(typeTrafficLight, lightBulbs);
+    return doubleTrafficLight;
+}
 
 std::unique_ptr<ILightBulb> createLightBulb(ColorLightBulb colorBulb) {
     return std::make_unique<LightBulb>(colorBulb);
