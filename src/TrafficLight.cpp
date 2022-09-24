@@ -32,9 +32,6 @@ void TrafficLight::init(TypeTrafficLight typeTrafficLight, std::vector<std::uniq
 void TrafficLight::allow() {
    if(m_vBulbs.at(0))
       m_vBulbs.at(0)->On();
-    
-    if(m_vBulbs.at(1))
-       m_vBulbs.at(1)->Off();
 
    std::cout << "Allow TrafficLight" << '\n';
 }
@@ -42,9 +39,6 @@ void TrafficLight::allow() {
 void TrafficLight::disallow() {
     if(m_vBulbs.at(0))
        m_vBulbs.at(0)->Off();
-    
-   if(m_vBulbs.at(1))
-      m_vBulbs.at(1)->On();
 
    std::cout << "Disallow TrafficLight" << "\n";
 }
