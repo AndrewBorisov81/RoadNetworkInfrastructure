@@ -6,6 +6,8 @@
 //
 
 #pragma once
+
+#include <memory>
 #include <vector>
 
 #include "ITrafficLight.h"
@@ -13,13 +15,15 @@
 class ILightBulb;
 class TrafficLightImpl;
 
+ class TrafficLightImpl;
+
 enum class TypeTrafficLight { NONE, DOUBLE_PEOPLE, TRIPLE_PEOPLE, DOUBLE_TRANS, TRIPLE_TRANS };
 
 class TrafficLight: public ITrafficLight
 {
     public:
         TrafficLight();
-        TrafficLight(TrafficLightImpl * p);
+        TrafficLight(std::unique_ptr<TrafficLightImpl> p);
         virtual ~TrafficLight();
     
         virtual void allow() override;
@@ -30,8 +34,7 @@ class TrafficLight: public ITrafficLight
         TypeTrafficLight getType() const;
 
     protected:
-        TrafficLightImpl * pimpl;
+        std::unique_ptr<TrafficLightImpl> m_pimpl;
         std::vector<std::unique_ptr<ILightBulb>> m_vBulbs;
         TypeTrafficLight m_type{TypeTrafficLight::DOUBLE_TRANS};
 };
-

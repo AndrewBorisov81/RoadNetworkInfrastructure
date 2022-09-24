@@ -11,19 +11,18 @@
 #include "TrafficLightImpl.h"
 #include "ILightBulb.h"
 
-#include <memory>
 #include <iostream>
 
 TrafficLight::TrafficLight() {
     
 }
 
-TrafficLight::TrafficLight(TrafficLightImpl * p) : pimpl{p} {
+TrafficLight:: TrafficLight(std::unique_ptr<TrafficLightImpl> p) : m_pimpl{std::move(p)} {
 
 }
 
 TrafficLight::~TrafficLight() {
-   delete pimpl;
+   
 }
 
 void TrafficLight::init(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>>& lightBulbs) {
