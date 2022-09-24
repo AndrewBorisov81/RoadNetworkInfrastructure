@@ -6,7 +6,10 @@
 //
 
 #pragma once
+
 #include "ILightBulb.h"
+
+#include <iostream>
 
 enum class ColorLightBulb { NONE, RED, GREEN, YELLOW };
 
@@ -17,8 +20,8 @@ public:
     LightBulb(ColorLightBulb color) : m_color{color} {}
     virtual ~LightBulb() override = default;
     
-    virtual void On() override {}
-    virtual void Off() override {}
+    virtual void On() override { std::cout << "LightBulb On!" << '\n'; }
+    virtual void Off() override { std::cout << "LightBulb Off!" << '\n'; }
 private:
     ColorLightBulb m_color {ColorLightBulb::NONE};
 };

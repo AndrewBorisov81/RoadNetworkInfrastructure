@@ -12,6 +12,7 @@
 #include "ILightBulb.h"
 
 #include <memory>
+#include <iostream>
 
 TrafficLight::TrafficLight() {
     
@@ -35,6 +36,8 @@ void TrafficLight::allow() {
     
     if(m_vBulbs.at(1))
        m_vBulbs.at(1)->Off();
+
+   std::cout << "Allow TrafficLight" << '\n';
 }
 
 void TrafficLight::disallow() {
@@ -43,6 +46,8 @@ void TrafficLight::disallow() {
     
    if(m_vBulbs.at(1))
       m_vBulbs.at(1)->On();
+
+   std::cout << "Disallow TrafficLight" << "\n";
 }
 
 TypeTrafficLight TrafficLight::getType() const {

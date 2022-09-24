@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "ITrafficLight.h"
-//#include "DoubleTrafficLight.h"
 
 class ILightBulb;
 class TrafficLightImpl;
@@ -35,3 +34,4 @@ class TrafficLight: public ITrafficLight
         std::vector<std::unique_ptr<ILightBulb>> m_vBulbs;
         TypeTrafficLight m_type{TypeTrafficLight::DOUBLE_TRANS};
 };
+

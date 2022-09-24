@@ -6,37 +6,20 @@ TrafficLightImpl::~TrafficLightImpl() {
 
 }
 
-void DoubleTrafficLightImpl::allow() {
-    std::cout << "Double trafficLight allow" << "\n";
+void TrafficLightImpl::double_allow() {
+
 }
 
-void DoubleTrafficLightImpl::disallow() {
-    std::cout << "Double trafficLight disallow" << "\n";
+void TrafficLightImpl::double_disallow() {
+
 }
 
-void DoubleTrafficLightImpl::double_allow() {
-    std::cout << "Double trafficLight double_allow" << "\n";
+void TrafficLightImpl::triple_allow() {
+
 }
 
-void DoubleTrafficLightImpl::double_disallow() {
-    std::cout << "Double trafficLight double_disallow" << "\n";
-}
+void TrafficLightImpl::triple_disallow() {
 
-void DoubleTrafficLightImpl::triple_allow() {
-    std::cout << "Double trafficLight triple_disallow" << "\n";
-}
-
-void DoubleTrafficLightImpl::triple_disallow() {
-    std::cout << "Double trafficLight triple_disallow" << "\n";
-}
-
-void TripleTrafficLightImpl::allow() {
-    std::cout << "Triple trafficLight allow" << "\n";
-}
-
-
-void TripleTrafficLightImpl::disallow() {
-    std::cout << "Triple trafficLight disallow" << "\n";
 }
 
 void TripleTrafficLightImpl::double_allow() {
@@ -54,3 +37,5 @@ void TripleTrafficLightImpl::triple_allow() {
 void TripleTrafficLightImpl::triple_disallow() {
     std::cout << "Triple trafficLight triple_disallow" << "\n";
 }
+
+

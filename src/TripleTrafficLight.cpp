@@ -16,4 +16,3 @@ pimpl->triple_allow();
 void TripleTrafficLight::disallow() {
 pimpl->triple_disallow();
 }
-
