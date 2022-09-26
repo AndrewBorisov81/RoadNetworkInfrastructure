@@ -4,12 +4,9 @@
 //
 //  Created by Andrew Borisov on 20.02.2022.
 //
-
-#include <stdio.h>
-
 #include "TrafficLight.h"
 #include "TrafficLightImpl.h"
-#include "ILightBulb.h"
+#include "LightBulb.h"
 
 #include <iostream>
 
@@ -25,8 +22,12 @@ TrafficLight::~TrafficLight() {
    
 }
 
-void TrafficLight::init(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>>& lightBulbs) {
-    
+void TrafficLight::init(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>> lightBulbs) {
+    m_type = typeTrafficLight;
+    m_vBulbs.reserve(lightBulbs.size());
+    for(const auto& b: lightBulbs) {
+      m_vBulbs.push_back(b->clone());
+    }
 }
 
 void TrafficLight::allow() {

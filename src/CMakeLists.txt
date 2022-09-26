@@ -3,6 +3,7 @@ TrafficLightsTimingController.cpp
 TrafficLightsController.cpp
 ControllerStateMachine.cpp
 ControllerLogicModule.cpp
+LightBulb.cpp
 TrafficLight.cpp
 DoubleTrafficLight.cpp
 TripleTrafficLight.cpp

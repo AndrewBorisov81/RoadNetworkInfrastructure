@@ -29,7 +29,7 @@ class TrafficLight: public ITrafficLight
         virtual void allow() override;
         virtual void disallow() override;
 
-        void init(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>>& lightBulbs);
+        void init(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>> lightBulbs);
 
         TypeTrafficLight getType() const;
 

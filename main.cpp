@@ -16,6 +16,7 @@
 #include "src/LightBulb.h"
 #include "src/CrossRoads.h"
 #include "src/Bridge.h"
+#include "src/ITrafficLight.h"
 #include "src/TrafficLight.h"
 #include "src/DoubleTrafficLight.h"
 #include "src/ITrafficLightsController.h"
@@ -25,8 +26,17 @@
 #include "src/TrafficLightsTimingController.h"
 #include "src/ITrafficLightsTimingController.h"
 
-std::unique_ptr<CrossRoads> createCrossroad() {
-    return std::make_unique<CrossRoads>();
+// Light bulb
+std::vector<ColorLightBulb> vLightBulbs{ColorLightBulb::RED, ColorLightBulb::GREEN};
+
+std::vector<std::unique_ptr<ILightBulb>> createLightBulbs(const std::vector<ColorLightBulb>& vfLightBulbs) {
+    
+    std::vector<std::unique_ptr<ILightBulb>> vLightBulbs;
+    
+    for(const ColorLightBulb& color : vfLightBulbs) {
+        vLightBulbs.emplace_back(std::make_unique<LightBulb>(color));
+    }
+    return vLightBulbs;
 }
 
 std::vector<TypeTrafficLight> vTrafficLights{TypeTrafficLight::DOUBLE_TRANS, TypeTrafficLight::DOUBLE_PEOPLE};
@@ -36,41 +46,13 @@ std::unique_ptr<ITrafficLight> createTrafficLight(TypeTrafficLight typeTrafficLi
     return std::make_unique<TrafficLight>();
 }
 
-std::unique_ptr<ITrafficLight> createDoubleTrafficLight(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>>& lightBulbs) {
+std::unique_ptr<ITrafficLight> createDoubleTrafficLight() {
     std::unique_ptr<DoubleTrafficLight> doubleTrafficLight = std::make_unique<DoubleTrafficLight>();
-    doubleTrafficLight->init(typeTrafficLight, lightBulbs);
+    std::vector<ColorLightBulb> colorsLightBulbs{ColorLightBulb::GREEN, ColorLightBulb::RED};
+    std::vector<std::unique_ptr<ILightBulb>> lightBulbs = createLightBulbs(colorsLightBulbs);
+    TypeTrafficLight typeTrafficLight{TypeTrafficLight::DOUBLE_TRANS};
+    doubleTrafficLight->init(typeTrafficLight, std::move(lightBulbs));
     return doubleTrafficLight;
-}
-
-std::unique_ptr<ILightBulb> createLightBulb(ColorLightBulb colorBulb) {
-    return std::make_unique<LightBulb>(colorBulb);
-}
-
-std::unique_ptr<ILightBulb> createLightBulb() {
-    return std::make_unique<LightBulb>();
-}
-
-std::vector<ColorLightBulb> vLightBulbs{ColorLightBulb::RED, ColorLightBulb::GREEN};
-
-std::vector<std::unique_ptr<ILightBulb>> createLightBulbs(const std::vector<ColorLightBulb>& vfLightBulbs) {
-    
-    std::vector<std::unique_ptr<ILightBulb>> vLightBulbs;
-    
-    for(const ColorLightBulb& color : vfLightBulbs) {
-        switch(color) {
-            case ColorLightBulb::RED:
-                vLightBulbs.emplace_back(std::make_unique<LightBulb>());
-                break;
-                
-            case ColorLightBulb::GREEN:
-                vLightBulbs.emplace_back(std::make_unique<LightBulb>());
-                break;
-                
-            default:
-                break;
-        };
-    }
-    return vLightBulbs;
 }
 
 std::unique_ptr<ControllerStateMachine> createControllerStateMachine() {
@@ -79,6 +61,10 @@ std::unique_ptr<ControllerStateMachine> createControllerStateMachine() {
 
 std::unique_ptr<ITrafficLightsTimingController> createTrafficLightsTimingController() {
     return std::make_unique<TrafficLightsTimingController>();
+}
+
+std::unique_ptr<CrossRoads> createCrossroad() {
+    return std::make_unique<CrossRoads>();
 }
 
 // Class road object contains all road objects type
@@ -153,6 +139,10 @@ int main(int argc, const char* argv[]) {
         if(mainTrafficLightTimingController)
             mainTrafficLightTimingController->update();
     }*/
-    
+
+    // Create double traffic light
+    std::unique_ptr<ITrafficLight> doubleTrafficLight = createDoubleTrafficLight();
+    doubleTrafficLight->allow();
+    //doubleTrafficLight->disallow();
     return 0;
 }

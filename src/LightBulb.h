@@ -16,12 +16,14 @@ enum class ColorLightBulb { NONE, RED, GREEN, YELLOW };
 class LightBulb : public ILightBulb
 {
 public:
-    LightBulb() {}
-    LightBulb(ColorLightBulb color) : m_color{color} {}
-    virtual ~LightBulb() override = default;
-    
-    virtual void On() override { std::cout << "LightBulb On!" << '\n'; }
-    virtual void Off() override { std::cout << "LightBulb Off!" << '\n'; }
+    LightBulb();
+    LightBulb(ColorLightBulb color);
+    virtual ~LightBulb() override;
+
+    virtual std::unique_ptr<ILightBulb> clone() const override;
+    virtual void On() override;
+    virtual void Off() override;
 private:
     ColorLightBulb m_color {ColorLightBulb::NONE};
+    const char *colour_name[];
 };
