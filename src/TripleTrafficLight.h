@@ -10,4 +10,3 @@ class TripleTrafficLight: public TrafficLight {
         void virtual allow() override;
         void virtual disallow() override;
 };
-

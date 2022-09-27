@@ -19,6 +19,7 @@
 #include "src/ITrafficLight.h"
 #include "src/TrafficLight.h"
 #include "src/DoubleTrafficLight.h"
+#include "src/TripleTrafficLight.h"
 #include "src/ITrafficLightsController.h"
 #include "src/TrafficLightsController.h"
 #include "src/ControllerStateMachine.h"
@@ -53,6 +54,15 @@ std::unique_ptr<ITrafficLight> createDoubleTrafficLight() {
     TypeTrafficLight typeTrafficLight{TypeTrafficLight::DOUBLE_TRANS};
     doubleTrafficLight->init(typeTrafficLight, std::move(lightBulbs));
     return doubleTrafficLight;
+}
+
+std::unique_ptr<ITrafficLight> createTripleTafficLight() {
+    std::unique_ptr<TripleTrafficLight> tripleTrafficLight = std::make_unique<TripleTrafficLight>();
+    std::vector<ColorLightBulb> colorsLightBulbs{ColorLightBulb::GREEN, ColorLightBulb::RED, ColorLightBulb::YELLOW};
+    std::vector<std::unique_ptr<ILightBulb>> lightBulbs = createLightBulbs(colorsLightBulbs);
+    TypeTrafficLight typeTrafficLight{TypeTrafficLight::TRIPLE_TRANS};
+    tripleTrafficLight->init(typeTrafficLight, std::move(lightBulbs));
+    return tripleTrafficLight;
 }
 
 std::unique_ptr<ControllerStateMachine> createControllerStateMachine() {
@@ -141,8 +151,13 @@ int main(int argc, const char* argv[]) {
     }*/
 
     // Create double traffic light
-    std::unique_ptr<ITrafficLight> doubleTrafficLight = createDoubleTrafficLight();
+    /*std::unique_ptr<ITrafficLight> doubleTrafficLight = createDoubleTrafficLight();
     doubleTrafficLight->allow();
-    doubleTrafficLight->disallow();
+    doubleTrafficLight->disallow();*/
+
+    // Create triple traffic light
+    std::unique_ptr<ITrafficLight> tripleTrafficLight = createTripleTafficLight();
+    tripleTrafficLight->allow();
+
     return 0;
 }

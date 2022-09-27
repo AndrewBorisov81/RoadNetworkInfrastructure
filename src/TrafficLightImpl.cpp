@@ -15,11 +15,11 @@ void TrafficLightImpl::double_disallow() {
 }
 
 void TrafficLightImpl::triple_allow() {
-
+    std::cout << "Triple triple_allow" << "\n";
 }
 
 void TrafficLightImpl::triple_disallow() {
-
+    std::cout << "Triple triple_disallow" << "\n";
 }
 
 void TripleTrafficLightImpl::double_allow() {
@@ -37,5 +37,3 @@ void TripleTrafficLightImpl::triple_allow() {
 void TripleTrafficLightImpl::triple_disallow() {
     std::cout << "Triple trafficLight triple_disallow" << "\n";
 }
-
-
