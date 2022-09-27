@@ -143,6 +143,6 @@ int main(int argc, const char* argv[]) {
     // Create double traffic light
     std::unique_ptr<ITrafficLight> doubleTrafficLight = createDoubleTrafficLight();
     doubleTrafficLight->allow();
-    //doubleTrafficLight->disallow();
+    doubleTrafficLight->disallow();
     return 0;
 }

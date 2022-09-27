@@ -10,6 +10,8 @@
 #include "ILightBulb.h"
 
 #include <iostream>
+#include <string>
+#include <vector>
 
 enum class ColorLightBulb { NONE, RED, GREEN, YELLOW };
 
@@ -25,5 +27,5 @@ public:
     virtual void Off() override;
 private:
     ColorLightBulb m_color {ColorLightBulb::NONE};
-    const char *colour_name[];
+    std::vector<std::string> m_colors{"None", "Red", "Green", "Yellow"};
 };

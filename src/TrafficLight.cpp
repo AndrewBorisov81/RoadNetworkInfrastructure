@@ -31,15 +31,17 @@ void TrafficLight::init(TypeTrafficLight typeTrafficLight, std::vector<std::uniq
 }
 
 void TrafficLight::allow() {
-   if(m_vBulbs.at(0))
-      m_vBulbs.at(0)->On();
+   if(m_vBulbs.size() > 0) {
+       m_vBulbs.at(0)->On();
+   }
 
    std::cout << "Allow TrafficLight" << '\n';
 }
 
 void TrafficLight::disallow() {
-    if(m_vBulbs.at(0))
-       m_vBulbs.at(0)->Off();
+   if(m_vBulbs.size() > 0) {
+      m_vBulbs.at(0)->Off();
+   }
 
    std::cout << "Disallow TrafficLight" << "\n";
 }
