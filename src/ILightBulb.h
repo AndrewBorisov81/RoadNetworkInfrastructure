@@ -18,4 +18,3 @@ public:
 
     virtual std::unique_ptr<ILightBulb> clone() const = 0;
 };
-

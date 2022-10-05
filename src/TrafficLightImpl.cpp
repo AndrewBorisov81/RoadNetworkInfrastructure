@@ -1,39 +1,25 @@
 #include "TrafficLightImpl.h"
+#include "ILightBulb.h"
 
 #include <iostream>
+#include <vector>
 
 TrafficLightImpl::~TrafficLightImpl() {
 
 }
 
-void TrafficLightImpl::double_allow() {
-
-}
-
-void TrafficLightImpl::double_disallow() {
-
-}
-
-void TrafficLightImpl::triple_allow() {
-    std::cout << "Triple triple_allow" << "\n";
-}
-
-void TrafficLightImpl::triple_disallow() {
-    std::cout << "Triple triple_disallow" << "\n";
-}
-
-void TripleTrafficLightImpl::double_allow() {
-    std::cout << "Triple trafficLight doble_allow" << "\n";
-}
-
-void TripleTrafficLightImpl::double_disallow() {
-    std::cout << "Triple trafficLight doble_disallow" << "\n";
-}
-
-void TripleTrafficLightImpl::triple_allow() {
+void TripleTrafficLightImpl::triple_allow(std::vector<std::unique_ptr<ILightBulb>> lightBulbs) {
+    if(lightBulbs.size() == 3) {
+        std::unique_ptr<ILightBulb> yellowlightBulb{std::move(lightBulbs.at(2))};
+        yellowlightBulb->On();
+    }
     std::cout << "Triple trafficLight triple_allow" << "\n";
 }
 
-void TripleTrafficLightImpl::triple_disallow() {
+void TripleTrafficLightImpl::triple_disallow(std::vector<std::unique_ptr<ILightBulb>> lightBulbs) {
+     if(lightBulbs.size() == 3) {
+        std::unique_ptr<ILightBulb> yellowlightBulb{std::move(lightBulbs.at(2))};
+        yellowlightBulb->Off();
+    }
     std::cout << "Triple trafficLight triple_disallow" << "\n";
 }

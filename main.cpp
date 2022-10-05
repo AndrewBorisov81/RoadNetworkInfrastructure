@@ -42,7 +42,7 @@ std::vector<std::unique_ptr<ILightBulb>> createLightBulbs(const std::vector<Colo
 
 std::vector<TypeTrafficLight> vTrafficLights{TypeTrafficLight::DOUBLE_TRANS, TypeTrafficLight::DOUBLE_PEOPLE};
 
-std::unique_ptr<ITrafficLight> createTrafficLight(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>>& lightBulbs) {
+std::unique_ptr<ITrafficLight> createTrafficLight(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>> lightBulbs) {
 
     return std::make_unique<TrafficLight>();
 }
@@ -158,6 +158,7 @@ int main(int argc, const char* argv[]) {
     // Create triple traffic light
     std::unique_ptr<ITrafficLight> tripleTrafficLight = createTripleTafficLight();
     tripleTrafficLight->allow();
+    tripleTrafficLight->disallow();
 
     return 0;
 }
