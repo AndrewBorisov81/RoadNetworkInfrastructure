@@ -13,7 +13,7 @@
 #include <string>
 #include <vector>
 
-enum class ColorLightBulb { NONE, GREEN, RED, YELLOW };
+enum class ColorLightBulb {GREEN, RED, YELLOW };
 
 class LightBulb : public ILightBulb
 {
@@ -26,6 +26,6 @@ public:
     virtual void On() override;
     virtual void Off() override;
 private:
-    ColorLightBulb m_color {ColorLightBulb::NONE};
-    std::vector<std::string> m_colors{"None", "Green", "Red", "Yellow"};
+    ColorLightBulb m_color {ColorLightBulb::GREEN};
+    std::vector<std::string> m_colors{"Green", "Red", "Yellow"};
 };
