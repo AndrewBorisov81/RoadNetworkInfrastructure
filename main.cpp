@@ -200,6 +200,7 @@ int main(int argc, const char* argv[]) {
     std::unique_ptr<ITrafficLight> tripleTrafficLight = createTripleTafficLight();
     tripleTrafficLight->allow();
     tripleTrafficLight->disallow();
+    static_cast<TripleTrafficLight*>(tripleTrafficLight.get())->wait();
 
     // Pool of TrafficLights
     TrafficLightPool* pool = TrafficLightPool::getInstance();

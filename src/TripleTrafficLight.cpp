@@ -20,3 +20,7 @@ void TripleTrafficLight::allow() {
 void TripleTrafficLight::disallow() {
     m_pimpl->triple_disallow(m_vBulbs);
 }
+
+void TripleTrafficLight::wait() {
+    m_pimpl->wait(m_vBulbs);
+}

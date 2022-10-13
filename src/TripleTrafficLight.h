@@ -5,8 +5,10 @@
 class TripleTrafficLight: public TrafficLight {
     public:
         TripleTrafficLight();
-        virtual ~ TripleTrafficLight();
+        virtual ~TripleTrafficLight();
 
         void virtual allow() override;
         void virtual disallow() override;
+
+        void wait();
 };
