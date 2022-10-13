@@ -25,3 +25,4 @@ void TripleTrafficLightImpl::triple_disallow(const std::vector<std::unique_ptr<I
 
     std::cout << "Triple trafficLight triple_disallow" << "\n";
 }
+
