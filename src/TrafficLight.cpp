@@ -5,17 +5,12 @@
 //  Created by Andrew Borisov on 20.02.2022.
 //
 #include "TrafficLight.h"
-#include "TrafficLightImpl.h"
 #include "LightBulb.h"
 
 #include <iostream>
 
 TrafficLight::TrafficLight() {
     
-}
-
-TrafficLight:: TrafficLight(std::unique_ptr<TrafficLightImpl> p) : m_pimpl{std::move(p)} {
-
 }
 
 TrafficLight::~TrafficLight() {

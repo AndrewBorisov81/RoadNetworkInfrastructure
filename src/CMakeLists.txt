@@ -9,7 +9,6 @@ DoubleTrafficLight.cpp
 TripleTrafficLight.cpp
 CrossRoadsDirector.cpp
 Bridge.cpp
-TrafficLightImpl.cpp
 )
 
 target_include_directories(my_src PUBLIC src)

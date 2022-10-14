@@ -1,5 +1,4 @@
 #include "DoubleTrafficLight.h"
-#include "TrafficLightImpl.h"
 #include "LightBulb.h"
 
 DoubleTrafficLight::DoubleTrafficLight() {

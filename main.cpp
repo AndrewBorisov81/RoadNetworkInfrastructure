@@ -58,13 +58,13 @@ std::unique_ptr<ITrafficLight> createDoubleTrafficLight() {
 
 //---------------Bridge (Used a  to add Yellow color) ------------------------
 
-std::unique_ptr<ITrafficLight> createTripleTafficLight() {
+/*std::unique_ptr<ITrafficLight> createTripleTafficLight() {
     std::unique_ptr<TripleTrafficLight> tripleTrafficLight = std::make_unique<TripleTrafficLight>();
     std::vector<ColorLightBulb> colorsLightBulbs{ColorLightBulb::GREEN, ColorLightBulb::RED, ColorLightBulb::YELLOW};
     std::vector<std::unique_ptr<ILightBulb>> lightBulbs = createLightBulbs(colorsLightBulbs);
     tripleTrafficLight->init(TypeTrafficLight::TRIPLE_TRANS, std::move(lightBulbs));
     return tripleTrafficLight;
-}
+}*/
 //-------------------------------------------------
 
 std::unique_ptr<ControllerStateMachine> createControllerStateMachine() {
@@ -197,10 +197,10 @@ int main(int argc, const char* argv[]) {
     doubleTrafficLight->disallow();
 
     // Create triple traffic light (DONE)
-    std::unique_ptr<ITrafficLight> tripleTrafficLight = createTripleTafficLight();
+    /*std::unique_ptr<ITrafficLight> tripleTrafficLight = createTripleTafficLight();
     tripleTrafficLight->allow();
     tripleTrafficLight->disallow();
-    static_cast<TripleTrafficLight*>(tripleTrafficLight.get())->wait();
+    static_cast<TripleTrafficLight*>(tripleTrafficLight.get())->wait();*/
 
     // Pool of TrafficLights
     TrafficLightPool* pool = TrafficLightPool::getInstance();
