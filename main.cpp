@@ -172,6 +172,59 @@ class TrafficLightPool {
 
 TrafficLightPool* TrafficLightPool::instance = 0;
 
+//-------------- TrafficLight Decorator -------------------------------
+class Decorator : public TrafficLight {
+        ITrafficLight* trL_;
+    public:
+        Decorator(ITrafficLight* trL) {
+            std::unique_ptr<ITrafficLight> trP = trL->clone();
+            //trL_ = dynamic_cast<TrafficLight*>(trP.get());
+            trL_ = dynamic_cast<TrafficLight*>(trP.release());
+            bool stop = true;
+        }
+        virtual void allow() override {
+            trL_->allow();
+        }
+        virtual void disallow() override {
+            trL_->disallow();
+        }
+};
+
+class TripleTrafficLightDecorator : public Decorator {
+    public:
+        TripleTrafficLightDecorator(TrafficLight* trL) : Decorator(trL) {
+            
+        }
+
+        virtual void allow() override {
+            Decorator::allow();
+        }
+
+        virtual void disallow() override {
+            Decorator::disallow();
+        }
+
+        void wait() {
+            if(m_vBulbs.size() <= 2) {
+                m_vBulbs.at(static_cast<int>(ColorLightBulb::GREEN))->Off();
+                m_vBulbs.at(static_cast<int>(ColorLightBulb::RED))->Off();
+            }
+
+            if(m_vBulbs.size() == 3) {
+                m_vBulbs.at(static_cast<int>(ColorLightBulb::YELLOW))->On();
+            }
+        }
+};
+
+std::unique_ptr<ITrafficLight> createTripleTafficLight() {
+    std::unique_ptr<TrafficLight> trafficLight = std::make_unique<TrafficLight>();
+    std::vector<ColorLightBulb> colorsLightBulbs{ColorLightBulb::GREEN, ColorLightBulb::RED, ColorLightBulb::YELLOW};
+    std::vector<std::unique_ptr<ILightBulb>> lightBulbs = createLightBulbs(colorsLightBulbs);
+    trafficLight->init(TypeTrafficLight::TRIPLE_TRANS, std::move(lightBulbs));
+    std::unique_ptr<TripleTrafficLightDecorator> tripleTrafficLight = std::make_unique<TripleTrafficLightDecorator>(trafficLight.get());
+    return tripleTrafficLight;
+}
+
 int main(int argc, const char* argv[]) {
     /*std::vector<std::unique_ptr<ILightBulb>> vBulbs(createLightBulbs(vLightBulbs));
     std::unique_ptr<ITrafficLight> mainTrafficLight = createTrafficLight(TypeTrafficLight::DOUBLE_TRANS, vBulbs);
@@ -192,22 +245,22 @@ int main(int argc, const char* argv[]) {
     }*/
 
     // Create double traffic light (DONE)
-    std::unique_ptr<ITrafficLight> doubleTrafficLight = createDoubleTrafficLight();
+    /*std::unique_ptr<ITrafficLight> doubleTrafficLight = createDoubleTrafficLight();
     doubleTrafficLight->allow();
-    doubleTrafficLight->disallow();
+    doubleTrafficLight->disallow();*/
 
     // Create triple traffic light (DONE)
-    /*std::unique_ptr<ITrafficLight> tripleTrafficLight = createTripleTafficLight();
+    std::unique_ptr<ITrafficLight> tripleTrafficLight = createTripleTafficLight();
     tripleTrafficLight->allow();
-    tripleTrafficLight->disallow();
-    static_cast<TripleTrafficLight*>(tripleTrafficLight.get())->wait();*/
+    //tripleTrafficLight->disallow();
+    //static_cast<TripleTrafficLight*>(tripleTrafficLight.get())->wait();
 
     // Pool of TrafficLights
-    TrafficLightPool* pool = TrafficLightPool::getInstance();
+    /*TrafficLightPool* pool = TrafficLightPool::getInstance();
     std::unique_ptr<ITrafficLight> trafficLight1;
-    std::unique_ptr<ITrafficLight> trafficLight2;
+    std::unique_ptr<ITrafficLight> trafficLight2;*/
     /* Resource will be created */
-    trafficLight1 = pool->getTrafficLight();
+    /*trafficLight1 = pool->getTrafficLight();
     std::vector<ColorLightBulb> colorsLightBulbs1{ColorLightBulb::GREEN, ColorLightBulb::RED};
     std::vector<std::unique_ptr<ILightBulb>> lightBulbs1 = createLightBulbs(colorsLightBulbs1);
     static_cast<TrafficLight*>(trafficLight1.get())->init(TypeTrafficLight::DOUBLE_TRANS, std::move(lightBulbs1));
@@ -219,7 +272,7 @@ int main(int argc, const char* argv[]) {
     std::vector<std::unique_ptr<ILightBulb>> lightBulbs2 = createLightBulbs(colorsLightBulbs2);
     static_cast<TrafficLight*>(trafficLight2.get())->init(TypeTrafficLight::TRIPLE_TRANS, std::move(lightBulbs2));
     trafficLight2->allow();
-    trafficLight2->disallow();
+    trafficLight2->disallow();*/
 
     return 0;
 }

@@ -15,4 +15,7 @@ public:
     virtual void disallow() = 0;
     
     virtual ~ITrafficLight() = default;
+
+    virtual std::unique_ptr<ITrafficLight> clone() const = 0;
 };
+

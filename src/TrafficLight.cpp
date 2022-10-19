@@ -17,6 +17,14 @@ TrafficLight::~TrafficLight() {
    
 }
 
+TrafficLight::TrafficLight(const TrafficLight& other) {
+   m_type = other.m_type;
+   m_vBulbs.reserve(other.m_vBulbs.size());
+    for(const auto& b: other.m_vBulbs) {
+      m_vBulbs.push_back(b->clone());
+    }
+}
+
 void TrafficLight::init(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>> lightBulbs) {
     m_type = typeTrafficLight;
     m_vBulbs.reserve(lightBulbs.size());
@@ -43,4 +51,8 @@ void TrafficLight::disallow() {
 
 TypeTrafficLight TrafficLight::getType() const {
    return m_type;
+}
+
+std::unique_ptr<ITrafficLight> TrafficLight::clone() const {
+    return std::make_unique<TrafficLight>(*this);
 }

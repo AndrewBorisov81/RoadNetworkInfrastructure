@@ -29,6 +29,10 @@ class TrafficLight: public ITrafficLight
 
         TypeTrafficLight getType() const;
 
+        TrafficLight(const TrafficLight& other);
+        
+        std::unique_ptr<ITrafficLight> clone() const override;
+
     protected:
         std::vector<std::unique_ptr<ILightBulb>> m_vBulbs;
         TypeTrafficLight m_type{TypeTrafficLight::DOUBLE_TRANS};
