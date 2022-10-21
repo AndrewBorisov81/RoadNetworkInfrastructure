@@ -5,17 +5,8 @@
 //  Created by Andrew Borisov on 20.02.2022.
 //
 #include "TrafficLight.h"
-#include "LightBulb.h"
 
 #include <iostream>
-
-TrafficLight::TrafficLight() {
-    
-}
-
-TrafficLight::~TrafficLight() {
-   
-}
 
 TrafficLight::TrafficLight(const TrafficLight& other) {
    m_type = other.m_type;

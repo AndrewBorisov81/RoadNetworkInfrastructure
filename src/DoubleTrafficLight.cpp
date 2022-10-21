@@ -1,15 +1,15 @@
 #include "DoubleTrafficLight.h"
 #include "LightBulb.h"
 
-DoubleTrafficLight::DoubleTrafficLight() {
+DoubleTrafficLight::DoubleTrafficLight(const DoubleTrafficLight& other) : TrafficLight(other){
 
 }
 
-DoubleTrafficLight::~DoubleTrafficLight() {
-
+std::unique_ptr<ITrafficLight> DoubleTrafficLight::clone() const {
+    return std::make_unique<DoubleTrafficLight>();
 }
 
-void DoubleTrafficLight::allow() {    
+void DoubleTrafficLight::allow() {   
     TrafficLight::allow();
     
     if(m_vBulbs.at(1))
@@ -26,3 +26,4 @@ void DoubleTrafficLight::disallow() {
 
    std::cout << "Disallow DoubleTrafficLight" << "\n";
 }
+

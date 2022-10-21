@@ -4,9 +4,12 @@
 
 class DoubleTrafficLight : public TrafficLight {
     public:
-        DoubleTrafficLight();
-        virtual ~DoubleTrafficLight();
+        virtual ~DoubleTrafficLight() = default;
+        DoubleTrafficLight() = default;
+        DoubleTrafficLight(const DoubleTrafficLight& other);
 
         virtual void allow() override;
         virtual void disallow() override;
+
+        virtual std::unique_ptr<ITrafficLight> clone() const override;
 };

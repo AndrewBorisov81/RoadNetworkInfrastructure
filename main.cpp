@@ -56,17 +56,6 @@ std::unique_ptr<ITrafficLight> createDoubleTrafficLight() {
     return doubleTrafficLight;
 }
 
-//---------------Bridge (Used a  to add Yellow color) ------------------------
-
-/*std::unique_ptr<ITrafficLight> createTripleTafficLight() {
-    std::unique_ptr<TripleTrafficLight> tripleTrafficLight = std::make_unique<TripleTrafficLight>();
-    std::vector<ColorLightBulb> colorsLightBulbs{ColorLightBulb::GREEN, ColorLightBulb::RED, ColorLightBulb::YELLOW};
-    std::vector<std::unique_ptr<ILightBulb>> lightBulbs = createLightBulbs(colorsLightBulbs);
-    tripleTrafficLight->init(TypeTrafficLight::TRIPLE_TRANS, std::move(lightBulbs));
-    return tripleTrafficLight;
-}*/
-//-------------------------------------------------
-
 std::unique_ptr<ControllerStateMachine> createControllerStateMachine() {
     return std::make_unique<ControllerStateMachine>();
 }
@@ -173,14 +162,12 @@ class TrafficLightPool {
 TrafficLightPool* TrafficLightPool::instance = 0;
 
 //-------------- TrafficLight Decorator -------------------------------
-class Decorator : public TrafficLight {
+class Decorator : public DoubleTrafficLight {
         ITrafficLight* trL_;
     public:
         Decorator(ITrafficLight* trL) {
             std::unique_ptr<ITrafficLight> trP = trL->clone();
-            //trL_ = dynamic_cast<TrafficLight*>(trP.get());
             trL_ = dynamic_cast<TrafficLight*>(trP.release());
-            bool stop = true;
         }
         virtual void allow() override {
             trL_->allow();
@@ -217,12 +204,22 @@ class TripleTrafficLightDecorator : public Decorator {
 };
 
 std::unique_ptr<ITrafficLight> createTripleTafficLight() {
-    std::unique_ptr<TrafficLight> trafficLight = std::make_unique<TrafficLight>();
-    std::vector<ColorLightBulb> colorsLightBulbs{ColorLightBulb::GREEN, ColorLightBulb::RED, ColorLightBulb::YELLOW};
+    //Create double traffic light
+    std::unique_ptr<DoubleTrafficLight> doubleTrafficLight = std::make_unique<DoubleTrafficLight>();
+    std::vector<ColorLightBulb> colorsLightBulbs{ColorLightBulb::GREEN, ColorLightBulb::RED};
     std::vector<std::unique_ptr<ILightBulb>> lightBulbs = createLightBulbs(colorsLightBulbs);
-    trafficLight->init(TypeTrafficLight::TRIPLE_TRANS, std::move(lightBulbs));
-    std::unique_ptr<TripleTrafficLightDecorator> tripleTrafficLight = std::make_unique<TripleTrafficLightDecorator>(trafficLight.get());
-    return tripleTrafficLight;
+    doubleTrafficLight->init(TypeTrafficLight::DOUBLE_TRANS, std::move(lightBulbs));
+
+    /*std::unique_ptr<ITrafficLight> tripleTrafficLight = std::make_unique<TripleTrafficLightDecorator>(doubleTrafficLight.release());
+    std::vector<ColorLightBulb> colorsLightBulbs{ColorLightBulb::GREEN, ColorLightBulb::RED, ColorLightBulb::YELLOW};
+    std::vector<std::unique_ptr<ILightBulb>> lightBulbs = createLightBulbs(colorsLightBulbs);*/
+
+    //std::unique_ptr<TripleTrafficLight> initTrafficLight = dynamic_cast<TripleTrafficLight*>
+    //tripleTrafficLight->init(TypeTrafficLight::TRIPLE_TRANS, std::move(lightBulbs));
+    /*if(dynamic_cast<TripleTrafficLightDecorator*>(tripleTrafficLight.get())) {
+        dynamic_cast<TripleTrafficLightDecorator*>(tripleTrafficLight.get());
+    }*/
+    return doubleTrafficLight;
 }
 
 int main(int argc, const char* argv[]) {

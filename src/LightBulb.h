@@ -18,9 +18,13 @@ enum class ColorLightBulb {GREEN, RED, YELLOW };
 class LightBulb : public ILightBulb
 {
 public:
-    LightBulb();
     LightBulb(ColorLightBulb color);
-    virtual ~LightBulb() override;
+    virtual ~LightBulb() = default;
+    LightBulb() = default;
+    LightBulb(const LightBulb&) = default;
+    LightBulb(LightBulb&&) = delete;
+    LightBulb& operator=(const LightBulb&) = delete;
+    LightBulb& operator=(LightBulb&&) = delete;
 
     virtual std::unique_ptr<ILightBulb> clone() const override;
     virtual void On() override;

@@ -11,16 +11,20 @@
 #include <vector>
 
 #include "ITrafficLight.h"
-
-class ILightBulb;
+#include "LightBulb.h"
 
 enum class TypeTrafficLight { NONE, DOUBLE_PEOPLE, TRIPLE_PEOPLE, DOUBLE_TRANS, TRIPLE_TRANS };
 
 class TrafficLight: public ITrafficLight
 {
     public:
-        TrafficLight();
-        virtual ~TrafficLight();
+        std::unique_ptr<ITrafficLight> clone() const override;
+        TrafficLight() = default;
+        virtual ~TrafficLight() = default;
+        TrafficLight(const TrafficLight&);
+        TrafficLight(const TrafficLight&&) = delete;
+        TrafficLight& operator=(const TrafficLight&) = delete;
+        TrafficLight& operator=(const TrafficLight&&) = delete;
     
         virtual void allow() override;
         virtual void disallow() override;
@@ -28,11 +32,6 @@ class TrafficLight: public ITrafficLight
         void init(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>> lightBulbs);
 
         TypeTrafficLight getType() const;
-
-        TrafficLight(const TrafficLight& other);
-        
-        std::unique_ptr<ITrafficLight> clone() const override;
-
     protected:
         std::vector<std::unique_ptr<ILightBulb>> m_vBulbs;
         TypeTrafficLight m_type{TypeTrafficLight::DOUBLE_TRANS};
