@@ -47,3 +47,11 @@ TypeTrafficLight TrafficLight::getType() const {
 std::unique_ptr<ITrafficLight> TrafficLight::clone() const {
     return std::make_unique<TrafficLight>(*this);
 }
+
+void TrafficLight::addBulb(std::unique_ptr<ILightBulb> lightBulb) {
+   m_vBulbs.push_back(std::move(lightBulb));
+}
+
+const std::vector<std::unique_ptr<ILightBulb>>& TrafficLight::getBulb() {
+   return m_vBulbs;
+}
