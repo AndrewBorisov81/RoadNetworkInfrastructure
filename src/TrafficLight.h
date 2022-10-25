@@ -33,7 +33,7 @@ class TrafficLight: public ITrafficLight
 
         void addBulb(std::unique_ptr<ILightBulb> lightBulb);
 
-        const std::vector<std::unique_ptr<ILightBulb>>& getBulb();
+        const std::vector<std::unique_ptr<ILightBulb>>& getBulb() const;
 
         TypeTrafficLight getType() const;
     protected:

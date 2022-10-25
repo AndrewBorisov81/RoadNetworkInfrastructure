@@ -52,6 +52,6 @@ void TrafficLight::addBulb(std::unique_ptr<ILightBulb> lightBulb) {
    m_vBulbs.push_back(std::move(lightBulb));
 }
 
-const std::vector<std::unique_ptr<ILightBulb>>& TrafficLight::getBulb() {
+const std::vector<std::unique_ptr<ILightBulb>>& TrafficLight::getBulb() const {
    return m_vBulbs;
 }

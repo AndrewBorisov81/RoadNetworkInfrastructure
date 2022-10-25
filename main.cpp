@@ -169,6 +169,11 @@ class Decorator : public DoubleTrafficLight {
         Decorator(ITrafficLight* trL) : trL_{trL} {
             bool stop = true;
         }
+        
+        virtual ~Decorator() {
+            delete trL_;
+        }
+
         virtual void allow() override {
             trL_->allow();
         }
@@ -194,17 +199,23 @@ class TripleTrafficLightDecorator : public Decorator {
         }
 
         void waitOn() {
-            if(dynamic_cast<DoubleTrafficLight*>(trL_)) {
-                if((dynamic_cast<DoubleTrafficLight*>(trL_)->getBulb().size() - 1) == static_cast<int>(ColorLightBulb::YELLOW)) {
-                    dynamic_cast<DoubleTrafficLight*>(trL_)->getBulb().at(static_cast<int>(ColorLightBulb::YELLOW))->On();
+            Decorator::disallow();
+
+            DoubleTrafficLight* doubleTrafficLight = dynamic_cast<DoubleTrafficLight*>(trL_);
+            if(doubleTrafficLight) {
+                const std::vector<std::unique_ptr<ILightBulb>>& bulbs = doubleTrafficLight->getBulb();
+                if(bulbs.size() >= 3) {
+                    bulbs.at(static_cast<int>(ColorLightBulb::YELLOW))->On();
                 }
             }
         }
 
         void waitOff() {
-            if(dynamic_cast<DoubleTrafficLight*>(trL_)) {
-                if((dynamic_cast<DoubleTrafficLight*>(trL_)->getBulb().size() - 1) == static_cast<int>(ColorLightBulb::YELLOW)) {
-                    dynamic_cast<DoubleTrafficLight*>(trL_)->getBulb().at(static_cast<int>(ColorLightBulb::YELLOW))->Off();
+            DoubleTrafficLight* doubleTrafficLight = dynamic_cast<DoubleTrafficLight*>(trL_);
+            if(doubleTrafficLight) {
+                const std::vector<std::unique_ptr<ILightBulb>>& bulbs = doubleTrafficLight->getBulb();
+                if(bulbs.size() >= 3) {
+                    bulbs.at(static_cast<int>(ColorLightBulb::YELLOW))->Off();
                 }
             }
         }
@@ -248,9 +259,11 @@ int main(int argc, const char* argv[]) {
 
     // Create triple traffic light (DONE)
     std::unique_ptr<ITrafficLight> tripleTrafficLight = createTripleTafficLight();
-    tripleTrafficLight->allow();
-    tripleTrafficLight->disallow();
-    //static_cast<TripleTrafficLight*>(tripleTrafficLight.get())->wait();
+    //tripleTrafficLight->allow();
+    //tripleTrafficLight->disallow();
+    if(dynamic_cast<TripleTrafficLightDecorator*>(tripleTrafficLight.get())) {
+        dynamic_cast<TripleTrafficLightDecorator*>(tripleTrafficLight.get())->waitOn();
+    }
 
     // Pool of TrafficLights
     /*TrafficLightPool* pool = TrafficLightPool::getInstance();
