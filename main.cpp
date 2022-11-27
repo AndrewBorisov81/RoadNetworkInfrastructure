@@ -177,7 +177,7 @@ class Decorator : public TrafficLight {
             trL_->disallow();
         }
 
-    private:
+    protected:
         std::unique_ptr<ITrafficLight> trL_;
 };
 
@@ -191,17 +191,25 @@ class DoubleTrafficLightDecorator : public Decorator {
 
         virtual void allow() override {
             Decorator::allow();
-
-            if(m_vBulbs.size() >= 1) {
-                m_vBulbs.at(static_cast<int>(ColorLightBulb::RED))->Off();
+            
+            TrafficLight* trafficLight = dynamic_cast<TrafficLight*>(trL_.get());
+            if(trafficLight){
+                const std::vector<std::unique_ptr<ILightBulb>>& bulbs = trafficLight->getBulb();
+                if(bulbs.size() >= 1) {
+                   bulbs.at(static_cast<int>(ColorLightBulb::RED))->Off();
+                }
             }
         }
 
         virtual void disallow() override {
             Decorator::disallow();
 
-            if(m_vBulbs.size() >= 1) {
-                m_vBulbs.at(static_cast<int>(ColorLightBulb::RED))->On();
+            TrafficLight* trafficLight = dynamic_cast<TrafficLight*>(trL_.get());
+            if(trafficLight){
+                const std::vector<std::unique_ptr<ILightBulb>>& bulbs = trafficLight->getBulb();
+                if(bulbs.size() >= 1) {
+                       bulbs.at(static_cast<int>(ColorLightBulb::RED))->On();
+                }
             }
         }
 };
