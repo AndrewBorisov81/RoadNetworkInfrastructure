@@ -20,6 +20,7 @@ class TrafficLight: public ITrafficLight
     public:
         std::unique_ptr<ITrafficLight> clone() const override;
         TrafficLight() = default;
+        TrafficLight(std::vector<std::unique_ptr<ILightBulb>> lightBulbs);
         virtual ~TrafficLight() = default;
         TrafficLight(const TrafficLight&);
         TrafficLight(const TrafficLight&&) = delete;

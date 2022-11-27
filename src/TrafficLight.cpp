@@ -8,6 +8,13 @@
 
 #include <iostream>
 
+TrafficLight::TrafficLight(std::vector<std::unique_ptr<ILightBulb>> lightBulbs) {
+    m_vBulbs.reserve(lightBulbs.size());
+    for(const auto& b: lightBulbs) {
+      m_vBulbs.push_back(b->clone());
+    }
+}
+
 TrafficLight::TrafficLight(const TrafficLight& other) {
    m_type = other.m_type;
    m_vBulbs.reserve(other.m_vBulbs.size());

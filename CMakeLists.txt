@@ -17,11 +17,11 @@ add_subdirectory(src)
 # set compile options for my_src library
 target_compile_options(my_src PRIVATE ${CXX_FLAGS})
 
-add_executable(RoadNetworkInfrastructure main.cpp RdnwinfInstance.cpp)
+find_package(Boost COMPONENTS system filesystem REQUIRED)
+if(Boost_FOUND) 
+    include_directories(${Boost_INCLUDE_DIR})
+    add_executable(RoadNetworkInfrastructure main.cpp RdnwinfInstance.cpp)
+    link_directories(${Boost_LIBRARY_DIR})
+endif()
 
-# set compile options for the main executable
-target_compile_options(RoadNetworkInfrastructure PRIVATE ${CXX_FLAGS}
-     "$<$<CONFIG:Debug>:${CXX_FLAGS_DEBUG}>"
-     "$<$<CONFIG:Release>:${CXX_FLAGS_RELEASE}>")
-
-target_link_libraries(RoadNetworkInfrastructure PRIVATE my_src)
+target_link_libraries(RoadNetworkInfrastructure my_src ${Boost_LIBRARIES})
