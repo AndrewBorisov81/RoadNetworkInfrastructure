@@ -194,7 +194,7 @@ class DoubleTrafficLightDecorator : public Decorator {
             
             TrafficLight* trafficLight = dynamic_cast<TrafficLight*>(trL_.get());
             if(trafficLight){
-                const std::vector<std::unique_ptr<ILightBulb>>& bulbs = trafficLight->getBulb();
+                const std::vector<std::unique_ptr<ILightBulb>>& bulbs = trafficLight->getBulbs();
                 if(bulbs.size() >= 1) {
                    bulbs.at(static_cast<int>(ColorLightBulb::RED))->Off();
                 }
@@ -206,7 +206,7 @@ class DoubleTrafficLightDecorator : public Decorator {
 
             TrafficLight* trafficLight = dynamic_cast<TrafficLight*>(trL_.get());
             if(trafficLight){
-                const std::vector<std::unique_ptr<ILightBulb>>& bulbs = trafficLight->getBulb();
+                const std::vector<std::unique_ptr<ILightBulb>>& bulbs = trafficLight->getBulbs();
                 if(bulbs.size() >= 1) {
                        bulbs.at(static_cast<int>(ColorLightBulb::RED))->On();
                 }
@@ -233,11 +233,11 @@ class TripleTrafficLightDecorator : public Decorator {
         void waitOn() {
             Decorator::disallow();
              
-            //auto doubleTrafficLight = std::dynamic_pointer_cast<DoubleTrafficLight>(trL_);
+            /*auto doubleTrafficLight = std::dynamic_pointer_cast<DoubleTrafficLight>(trL_);
 
-            /*DoubleTrafficLight* doubleTrafficLight = dynamic_cast<DoubleTrafficLight*>(trL_);
+            DoubleTrafficLight* doubleTrafficLight = dynamic_cast<DoubleTrafficLight*>(trL_);
             if(doubleTrafficLight) {
-                const std::vector<std::unique_ptr<ILightBulb>>& bulbs = doubleTrafficLight->getBulb();
+                const std::vector<std::unique_ptr<ILightBulb>>& bulbs = doubleTrafficLight->getBulbs();
                 if(bulbs.size() >= 3) {
                     bulbs.at(static_cast<int>(ColorLightBulb::YELLOW))->On();
                 }
@@ -245,13 +245,13 @@ class TripleTrafficLightDecorator : public Decorator {
         }
 
         void waitOff() {
-            /*DoubleTrafficLight* doubleTrafficLight = dynamic_cast<DoubleTrafficLight*>(trL_);
-            if(doubleTrafficLight) {
-                const std::vector<std::unique_ptr<ILightBulb>>& bulbs = doubleTrafficLight->getBulb();
+            TrafficLight* trafficLight = dynamic_cast<TrafficLight*>(trL_.get());
+            if(trafficLight) {
+                const std::vector<std::unique_ptr<ILightBulb>>& bulbs = trafficLight->getBulbs();
                 if(bulbs.size() >= 3) {
                     bulbs.at(static_cast<int>(ColorLightBulb::YELLOW))->Off();
                 }
-            }*/
+            }
         }
 };
 
@@ -271,12 +271,12 @@ std::unique_ptr<ITrafficLight> createTripleTafficLight() {
 std::unique_ptr<ITrafficLight> createTripleTrafficLightDecorator() {
     std::vector<ColorLightBulb> colorsLightBulbs{ColorLightBulb::GREEN, ColorLightBulb::RED, ColorLightBulb::YELLOW};
     std::vector<std::unique_ptr<ILightBulb>> lightBulbs = createLightBulbs(colorsLightBulbs);
-    /*std::unique_ptr<ITrafficLight> tripleTrafficLightDecorator = std::make_unique<DoubleTrafficLightDecorator>(
-                                                                     std::make_unique<TripleTrafficLightDecorator>(
-                                                                        std::make_unique<TrafficLight>(std::move(lightBulbs))));*/
+    std::unique_ptr<ITrafficLight> tripleTrafficLightDecorator = std::make_unique<TripleTrafficLightDecorator>(
+                                                                     std::make_unique<DoubleTrafficLightDecorator>(
+                                                                        std::make_unique<TrafficLight>(std::move(lightBulbs))));
 
-    std::unique_ptr<ITrafficLight> tripleTrafficLightDecorator = std::make_unique<DoubleTrafficLightDecorator>(
-                                                                     std::make_unique<TrafficLight>(std::move(lightBulbs)));
+    /*std::unique_ptr<ITrafficLight> tripleTrafficLightDecorator = std::make_unique<DoubleTrafficLightDecorator>(
+                                                                     std::make_unique<TrafficLight>(std::move(lightBulbs)));*/
     return tripleTrafficLightDecorator;
 }
 

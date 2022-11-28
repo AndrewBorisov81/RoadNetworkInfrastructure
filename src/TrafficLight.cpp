@@ -33,7 +33,7 @@ void TrafficLight::init(TypeTrafficLight typeTrafficLight, std::vector<std::uniq
 
 void TrafficLight::allow() {
    if(m_vBulbs.size() > 0) {
-       m_vBulbs.at(0)->On();
+       m_vBulbs.at(static_cast<int>(ColorLightBulb::GREEN))->On();
    }
 
    std::cout << "Allow TrafficLight" << '\n';
@@ -41,7 +41,7 @@ void TrafficLight::allow() {
 
 void TrafficLight::disallow() {
    if(m_vBulbs.size() > 0) {
-      m_vBulbs.at(0)->Off();
+      m_vBulbs.at(static_cast<int>(ColorLightBulb::GREEN))->Off();
    }
 
    std::cout << "Disallow TrafficLight" << "\n";
@@ -59,6 +59,6 @@ void TrafficLight::addBulb(std::unique_ptr<ILightBulb> lightBulb) {
    m_vBulbs.push_back(std::move(lightBulb));
 }
 
-const std::vector<std::unique_ptr<ILightBulb>>& TrafficLight::getBulb() const {
+const std::vector<std::unique_ptr<ILightBulb>>& TrafficLight::getBulbs() const {
    return m_vBulbs;
 }

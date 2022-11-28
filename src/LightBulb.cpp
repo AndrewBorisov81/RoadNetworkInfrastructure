@@ -1,16 +1,8 @@
 #include "LightBulb.h"
 
-/*LightBulb::LightBulb() {
-
-}*/
-
 LightBulb::LightBulb(ColorLightBulb color) : m_color{color} {
     
 }
-
-/*LightBulb::~LightBulb() {
-
-}*/
 
 void LightBulb::On() { 
     std::cout << m_colors[static_cast<int>(m_color)] << " LightBulb On!" << '\n'; 
