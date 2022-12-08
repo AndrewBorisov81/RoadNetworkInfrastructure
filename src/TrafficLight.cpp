@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-TrafficLight::TrafficLight(std::vector<std::unique_ptr<ILightBulb>> lightBulbs) {
+TrafficLight::TrafficLight(std::vector<std::shared_ptr<ILightBulb>> lightBulbs) {
     m_vBulbs.reserve(lightBulbs.size());
     for(const auto& b: lightBulbs) {
       m_vBulbs.push_back(b->clone());
@@ -23,7 +23,7 @@ TrafficLight::TrafficLight(const TrafficLight& other) {
     }
 }
 
-void TrafficLight::init(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>> lightBulbs) {
+void TrafficLight::init(TypeTrafficLight typeTrafficLight, std::vector<std::shared_ptr<ILightBulb>> lightBulbs) {
     m_type = typeTrafficLight;
     m_vBulbs.reserve(lightBulbs.size());
     for(const auto& b: lightBulbs) {
@@ -55,10 +55,10 @@ std::unique_ptr<ITrafficLight> TrafficLight::clone() const {
     return std::make_unique<TrafficLight>(*this);
 }
 
-void TrafficLight::addBulb(std::unique_ptr<ILightBulb> lightBulb) {
+void TrafficLight::addBulb(std::shared_ptr<ILightBulb> lightBulb) {
    m_vBulbs.push_back(std::move(lightBulb));
 }
 
-const std::vector<std::unique_ptr<ILightBulb>>& TrafficLight::getBulbs() const {
+const std::vector<std::shared_ptr<ILightBulb>>& TrafficLight::getBulbs() const {
    return m_vBulbs;
 }

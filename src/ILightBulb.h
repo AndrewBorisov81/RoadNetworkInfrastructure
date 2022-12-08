@@ -16,5 +16,5 @@ public:
     virtual void On() = 0;
     virtual void Off() = 0;
 
-    virtual std::unique_ptr<ILightBulb> clone() const = 0;
+    virtual std::shared_ptr<ILightBulb> clone() const = 0;
 };

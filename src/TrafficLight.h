@@ -20,7 +20,7 @@ class TrafficLight: public ITrafficLight
     public:
         std::unique_ptr<ITrafficLight> clone() const override;
         TrafficLight() = default;
-        TrafficLight(std::vector<std::unique_ptr<ILightBulb>> lightBulbs);
+        TrafficLight(std::vector<std::shared_ptr<ILightBulb>> lightBulbs);
         virtual ~TrafficLight() = default;
         TrafficLight(const TrafficLight&);
         TrafficLight(const TrafficLight&&) = delete;
@@ -30,14 +30,14 @@ class TrafficLight: public ITrafficLight
         virtual void allow() override;
         virtual void disallow() override;
 
-        void init(TypeTrafficLight typeTrafficLight, std::vector<std::unique_ptr<ILightBulb>> lightBulbs);
+        void init(TypeTrafficLight typeTrafficLight, std::vector<std::shared_ptr<ILightBulb>> lightBulbs);
 
-        void addBulb(std::unique_ptr<ILightBulb> lightBulb);
+        void addBulb(std::shared_ptr<ILightBulb> lightBulb);
 
-        const std::vector<std::unique_ptr<ILightBulb>>& getBulbs() const;
+        const std::vector<std::shared_ptr<ILightBulb>>& getBulbs() const;
 
         TypeTrafficLight getType() const;
     protected:
-        std::vector<std::unique_ptr<ILightBulb>> m_vBulbs;
+        std::vector<std::shared_ptr<ILightBulb>> m_vBulbs;
         TypeTrafficLight m_type{TypeTrafficLight::DOUBLE_TRANS};
 };

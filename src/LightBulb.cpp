@@ -12,6 +12,10 @@ void LightBulb::Off() {
     std::cout << m_colors[static_cast<int>(m_color)] << " LightBulb Off!" << '\n'; 
 }
 
-std::unique_ptr<ILightBulb> LightBulb::clone() const {
-    return std::make_unique<LightBulb>(*this);
+std::shared_ptr<ILightBulb> LightBulb::clone() const {
+    return cloneImplementation();
+}
+
+std::shared_ptr<ILightBulb> LightBulb::cloneImplementation() const {
+    return std::shared_ptr<LightBulb>(new LightBulb(*this));
 }
