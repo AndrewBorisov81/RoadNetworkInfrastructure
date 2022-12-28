@@ -27,6 +27,7 @@ public:
     LightBulb& operator=(LightBulb&&) = delete;
 
     virtual std::shared_ptr<ILightBulb> clone() const override;
+    
     virtual void On() override;
     virtual void Off() override;
 private:
@@ -35,4 +36,3 @@ private:
     ColorLightBulb m_color {ColorLightBulb::GREEN};
     std::vector<std::string> m_colors{"Green", "Red", "Yellow"};
 };
-
